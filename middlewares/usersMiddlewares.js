@@ -2,6 +2,7 @@ import JWT from "jsonwebtoken";
 import usersModel from "../models/usersModel.js";
 export const isLogin = (req, res, next) => {
   try {
+    console.log(req.headers.authorization);
     const token = req.headers.authorization;
     const decode = JWT.verify(token, process.env.JWT_SECRET_KEY);
     req.user_id = decode._id;
@@ -10,7 +11,7 @@ export const isLogin = (req, res, next) => {
     console.log(error);
     res.status(401).send({
       success: false,
-      message: `Something Went Wrong`,
+      message: `Something Went Wrong..`,
     });
   }
 };

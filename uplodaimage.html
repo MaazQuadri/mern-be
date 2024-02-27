@@ -7,9 +7,28 @@
   </head>
   <body>
     <h1>Image Upload</h1>
-    <form action="http://localhost:2000/api/v1/images/upload" method="post">
-      <input type="file" name="image" accept="image/*" required />
-      <button type="submit">Upload Image</button>
-    </form>
+    <!-- <form action="http://localhost:2000/api/v1/images/upload" method="post"> -->
+    <input id="input" type="file" name="image" accept="image/*" required />
+    <button id="btn">Upload Image</button>
+    <img
+      width="100px"
+      height="100px"
+      id="image"
+      src=""
+      alt=""
+      style="border-radius: 50%"
+    />
+    <!-- </form> -->
+    <script>
+      const btn = document.getElementById("btn");
+      const input = document.getElementById("input");
+      const image = document.getElementById("image");
+
+      btn.addEventListener("click", function () {
+        image.src = URL.createObjectURL(input.files[0]);
+        console.log(input.files[0]);
+        console.log(URL.createObjectURL(input.files[0]));
+      });
+    </script>
   </body>
 </html>

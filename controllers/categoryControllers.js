@@ -2,7 +2,7 @@ import categoryModel from "../models/categoryModel.js";
 
 export const createCategoryController = async (req, res) => {
   try {
-    const { name, slug } = req.body;
+    const { name } = req.body;
     if (!name) {
       return res.status(401).send({
         success: false,

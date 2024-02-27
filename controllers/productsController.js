@@ -5,7 +5,7 @@ export const createProductController = async (req, res) => {
   try {
     const { title, price, description, category } = req.fields;
     const { image } = req.files;
-
+    console.log(req.files);
     if (!title) {
       return res
         .status(401)
@@ -51,6 +51,40 @@ export const createProductController = async (req, res) => {
     res.status(401).send({
       success: false,
       message: `Error Creating Product`,
+    });
+  }
+};
+
+export const getAllProductsController = async (req, res) => {
+  try {
+    const products = await productsModel
+      .find({})
+      .populate("category")
+      .select("-image");
+    res.status(200).send({
+      success: true,
+      message: "Products Fetched",
+      products,
+    });
+  } catch (error) {
+    res.status(401).send({
+      success: false,
+      message: "Error Fetching Products",
+      error,
+    });
+  }
+};
+
+export const getProductPhotoController = async (req, res) => {
+  try {
+    const product = await productsModel.findById(req.params.pid);
+    res.set("Content-Type", product.image.contentType);
+    res.send(product.image.data);
+  } catch (error) {
+    res.status(404).send({
+      success: false,
+      message: `Error Fetching Product Image`,
+      error,
     });
   }
 };
