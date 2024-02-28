@@ -74,7 +74,7 @@ export const getAllProductsController = async (req, res) => {
     });
   }
 };
-
+  
 export const getProductPhotoController = async (req, res) => {
   try {
     const product = await productsModel.findById(req.params.pid);
@@ -88,3 +88,37 @@ export const getProductPhotoController = async (req, res) => {
     });
   }
 };
+
+      export const getSingleProductController= async (req,res)=>{
+        try{
+          const{pid}=req.params
+      
+          if (!pid) {
+            return res.status(400).send({
+              success: false,
+              message: 'ProductId is required.',
+            });
+          }
+      
+          const product = await productsModel.findById(pid).select("-image")
+      
+          if (!product) {
+            return res.status(404).send({
+              success: false,
+              message: 'Product not found.',
+            });
+          }
+      
+          res.status(200).send({
+            success:true,
+            message:`product fetched Successfully`,
+            product,
+          })
+        }catch(error){
+          res.status(401).send({
+            success:false,
+            message:`Error Fetching product`,
+            error,
+          })
+        }
+      }
