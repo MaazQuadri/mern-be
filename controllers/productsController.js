@@ -88,3 +88,19 @@ export const getProductPhotoController = async (req, res) => {
     });
   }
 };
+
+export const editProductController = async (req, res) => {
+  try {
+    const { pid } = req.params;
+    const editProduct = await productsModel.findById(pid);
+    console.log("req.params---->", req.params);
+    console.log("req.fields---->", req.fields, req.files);
+    console.log("edit.product---->", editProduct);
+  } catch (error) {
+    res.status(401).send({
+      success: false,
+      message: "Something went wrong",
+      error,
+    });
+  }
+};
